@@ -55,3 +55,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# underscore-prefixed directories for work files
+_*/
