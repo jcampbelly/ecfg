@@ -1,0 +1,2 @@
+# ecfg
+Enlightenment config parser
