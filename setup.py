@@ -6,6 +6,13 @@ from setuptools import setup
 with open('LICENSE') as f:
     license = f.read()
 
+with open('requirements.txt') as f:
+    requirements = f.readlines()
+
+# NOTE: It may be necessary to `pip install pbr` for `setup.py test` to work
+with open('test_requirements.txt') as f:
+    test_requirements = f.readlines()
+
 setup(
     name='ecfg',
     version='0.1.0',
@@ -14,15 +21,8 @@ setup(
     author='Jimmy Campbell',
     author_email='jcampbelly@gmail.com',
     url='https://github.com/jcampbelly/ecfg',
-    install_requires=[
-        'pyparsing>=2.0.3'
-    ],
-    tests_require=[
-        'nose==1.3.7',
-        'coverage==3.7.1',
-        'flake8==2.4.1',
-        'mock==1.3.0'
-    ],
+    install_requires=requirements,
+    tests_require=test_requirements,
     test_suite='nose.collector',
     packages=['ecfg'],
     entry_points={'console_scripts': ['ecfg = ecfg.cli:main']},
@@ -30,7 +30,9 @@ setup(
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
         'Intended Audience :: Developers',
+        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'License :: OSI Approved :: MIT License',
         'Topic :: Desktop Environment :: Window Managers :: Enlightenment',
