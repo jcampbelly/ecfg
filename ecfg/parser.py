@@ -10,12 +10,8 @@ Author: Jimmy Campbell <jcampbelly@gmail.com>
 Version: 0.1.0
 License: MIT
 '''
-from __future__ import print_function
-import os
-import sys
 import json
 import decimal
-import argparse
 from collections import OrderedDict
 import pyparsing as PP
 
@@ -55,7 +51,7 @@ class Struct(object):
         )
 
     def dict(self):
-        '''Return the Struct as Python OrderedDict.'''
+        '''Return the Struct as an OrderedDict.'''
         return OrderedDict((
             ('name', self.name),
             ('lists', [_list.dict() for _list in self.lists]),
@@ -63,7 +59,7 @@ class Struct(object):
         ))
 
     def text(self):
-        '''Return the Struct as an e.cfg text block.'''
+        '''Return the Struct as a config text block.'''
         text = 'group "%s" struct {\n%s%s\n}'
 
         lists = '\n'.join(_list.text() for _list in self.lists)
@@ -109,7 +105,7 @@ class List(object):
         )
 
     def dict(self):
-        '''Return the List as Python OrderedDict.'''
+        '''Return the List as an OrderedDict.'''
         return OrderedDict((
             ('name', self.name),
             ('items', [item.dict() for item in self.items]),
@@ -117,7 +113,7 @@ class List(object):
         ))
 
     def text(self):
-        '''Return the List as an e.cfg text block.'''
+        '''Return the List as a config text block.'''
         text = 'group "%s" list {\n%s%s\n}'
 
         items = '\n'.join(item.text() for item in self.items)
@@ -157,11 +153,7 @@ class Value(object):
         )
 
     def dict(self):
-        return {
-            'name': self.name,
-            'type': self.type,
-            'data': self.data
-        }
+        '''Return the Value as an OrderedDict.'''
         return OrderedDict((
             ('name', self.name),
             ('type', self.type),
@@ -169,6 +161,7 @@ class Value(object):
         ))
 
     def text(self):
+        ''' Return the Value as a config text block.'''
         data = self.data
         if self.type == 'string':
             data = '"%s"' % self.data
@@ -176,8 +169,8 @@ class Value(object):
 
     @property
     def value(self):
-        '''Return the Value data as its actual Python data type. Uses the
-        following mapping for each type:
+        '''A getter which returns the Value data as its actual Python data
+        type. Uses the following mapping for each type:
 
         - "uchar", "uint", "int" -> ``int``
         - "float", "double" -> ``decimal.Decimal``.
@@ -190,7 +183,11 @@ class Value(object):
         return self.data
 
 
-class ECfgTextParser(object):
+class ParserError(object):
+    pass
+
+
+class ECfgParser(object):
     '''A pyparsing parser for the e.cfg text format.'''
 
     # PRIMITIVES
@@ -278,18 +275,37 @@ class ECfgTextParser(object):
         PP.Suppress('}')
     ).setResultsName('struct')
 
-    def __init__(self, text):
-        '''Create an ECfgTextParser object.
+    @classmethod
+    def parse(cls, text):
+        '''Create a pyparsing ParseResults object.
 
         :param text: Enlightenment config text.
         :type text: string
         '''
-        self._parsed = self.type_struct.parseString(text)
-        self.result = Struct(*self._parsed.asList()[0])
+        try:
+            return cls.type_struct.parseString(text)
+        except PP.ParseException as e:
+            raise ParserError(str(e))
+
+
+class ECfg(object):
+    '''An Enlightenment config object.'''
+
+    def __init__(self, text, parser=ECfgParser):
+        '''Create an ECfgParser object.
+
+        :param text: Enlightenment config text.
+        :type text: string
+        :param parser: A Parser class (expects a `parse(text)` method.
+        :type parser: class
+        '''
+        self._parser = parser()
+        self._parsed = self._parser.parse(text)
+        self.root = Struct(*self._parsed.asList()[0])
 
     def text(self):
         '''Return the Enlightenment config text.'''
-        return self.result.text()
+        return self.root.text()
 
     def xml(self):
         '''Return the XML representation of the config.'''
@@ -297,35 +313,4 @@ class ECfgTextParser(object):
 
     def json(self, **kwargs):
         '''Return the JSON representation of the config.'''
-        return json.dumps(self.result.dict(), **kwargs)
-
-
-def main():
-    parser = argparse.ArgumentParser(description='Parse e.cfg files')
-    parser.add_argument('filename')
-    parser.add_argument('--output', choices=('text', 'xml', 'json'),
-                        default='text')
-    args = parser.parse_args()
-
-    if not os.path.exists(args.filename):
-        print('Input file not found' % args.filename)
-        sys.exit(1)
-
-    with open(args.filename) as f:
-        text = f.read()
-
-    result = ECfgTextParser(text)
-
-    if args.output == 'text':
-        print(result.text())
-    elif args.output == 'xml':
-        print(result.xml())
-    elif args.output == 'json':
-        print(result.json(indent=2))
-    else:
-        print('Unknown output format')
-        sys.exit(1)
-
-
-if __name__ == '__main__':
-    main()
+        return json.dumps(self.root.dict(), **kwargs)

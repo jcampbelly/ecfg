@@ -1,8 +1,9 @@
 #!/usr/bin/env python
+# https://pythonhosted.org/setuptools/setuptools.html
 
-from distutils.core import setup
+from setuptools import setup
 
-with open('LICENSE.md') as f:
+with open('LICENSE') as f:
     license = f.read()
 
 setup(
@@ -13,8 +14,9 @@ setup(
     author='Jimmy Campbell',
     author_email='jcampbelly@gmail.com',
     url='https://github.com/jcampbelly/ecfg',
+    install_requires=['pyparsing>=2.0.3'],
     packages=['ecfg'],
-    entry_points=['ecfg:main'],
+    entry_points={'console_scripts': ['ecfg = ecfg.cli:main']},
     classifiers=(
         'Development Status :: 3 - Alpha',
         'Environment :: Console',

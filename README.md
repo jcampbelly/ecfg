@@ -6,9 +6,70 @@ See: http://wiki.openmoko.org/wiki/Enlightenment_.cfg
 
 Requires pyparsing: https://pyparsing.wikispaces.com/.
 
-# Usage
+# Usage from CLI
 
+```bash
+ecfg e.cfg --output xml
+```
 
+# Usage as a Library
+
+```python
+import ecfg
+
+# parse the current config
+with open('e.cfg') as f:
+    text = f.read()
+
+result = ecfg.ECfg(text)
+
+# manipualte the config
+for value in result.values:
+    if value.name == 'screensaver_enable':
+        value.data = 0
+
+# save the new config
+with open('e2.cfg', 'w') as f:
+    f.write(result.text())
+```
+
+The `ecfg` module exposes some classes.
+
+- `ECfg` The main interface for interacting with a config file. Pass the
+  raw text of a config to the constructor and use the `root` property to work
+  with the config data.
+- `ECfgParser` A parser class, exposing a single class method: `parse(text)`,
+  which must return a pyparsing `ParseResults` object.
+- `Struct`
+    - `name` Struct name.
+    - `lists` List of List objects in this Struct.
+    - `values` List of Value objects in this Struct.
+    - `dict()` Return the Struct as an OrderedDict.
+    - `text()` Return the Struct as a config text block.
+- `List`
+    - `name` List name.
+    - `items` List of Struct objects in this List.
+    - `values` List of Value objects in this List.
+    - `dict()` Return the List as an OrderedDict.
+    - `text()` Return the List as a config text block.
+- `Value`
+    - `name` Value name.
+    - `type` Value type: uchar, uint, int, float, double, string.
+    - `data` The string data as represented in the e.cfg text block.
+    - `dict()` Return the Value as an OrderedDict.
+    - `text()` Return the Value as a config text block.
+    - `value` A getter which returns the Value data as its actual Python data
+      type. Uses the following mapping for each type:
+          - "uchar", "uint", "int" -> ``int``
+          - "float", "double" -> ``decimal.Decimal``.
+          - "string" -> ``str``.
+
+An `ECfg` instance exposes some properties and methods:
+
+- `root` The root `Struct` parsed from the config.
+- `text()` Return the Enlightenment config text.
+- `xml()` Return the XML representation of the config.
+- `json()` Return the JSON representation of the config.
 
 # Author
 
