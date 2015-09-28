@@ -89,6 +89,18 @@ An `ECfg` instance exposes some properties and methods:
 - `xml()` Return the XML representation of the config.
 - `json()` Return the JSON representation of the config.
 
+# Testing
+
+This library has been tested with Python 2.7.10 and Python 3.4.3.
+
+To run tests, you can use `python setup.py test` to install all install and
+testing requirements. NOTE: Because of a bug in pip, you may need to run
+`pip install pbr` after `python setup.py test` if you receive an error:
+`'Distribution' object has no attribute 'pbr'`.
+
+You may also run `test.sh` to get the full benefits of flake8 and coverage
+as well.
+
 # Author
 
 Jimmy Campbell <jcampbelly@gmail.com>
