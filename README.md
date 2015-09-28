@@ -99,7 +99,7 @@ An `ECfg` instance exposes some properties and methods:
 
 # Testing
 
-This library has been tested with Python 2.7.10 and Python 3.4.3.
+This library is tested with Python 2.7, 3.2, 3.3, 3.4, 3.5, and 3.5-dev.
 
 To install test requirements, use:
 
