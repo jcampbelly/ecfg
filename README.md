@@ -1,5 +1,7 @@
 # ecfg
 
+[![Build Status](https://travis-ci.org/jcampbelly/ecfg.svg)](https://travis-ci.org/jcampbelly/ecfg)
+
 An Enlightenment config parser.
 
 See: http://wiki.openmoko.org/wiki/Enlightenment_.cfg
@@ -97,7 +99,7 @@ An `ECfg` instance exposes some properties and methods:
 
 # Testing
 
-This library has been tested with Python 2.7.10 and Python 3.4.3.
+This library is tested with Python 2.7, 3.2, 3.3, 3.4, 3.5, and 3.5-dev.
 
 To install test requirements, use:
 
