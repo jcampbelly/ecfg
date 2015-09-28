@@ -5,7 +5,7 @@ import argparse
 from .parser import ECfg
 
 
-def main(argv=None, out=sys.stdout, err=sys.stderr):
+def main(argv=None):
     parser = argparse.ArgumentParser(description='Parse e.cfg files')
     parser.add_argument('filename')
     parser.add_argument('--format',
@@ -15,7 +15,7 @@ def main(argv=None, out=sys.stdout, err=sys.stderr):
     args = parser.parse_args(argv)
 
     if not os.path.exists(args.filename):
-        err.write('Input file not found')
+        print('Input file not found')
         return 1
 
     with open(args.filename) as f:
@@ -24,11 +24,11 @@ def main(argv=None, out=sys.stdout, err=sys.stderr):
     result = ECfg(text)
 
     if args.format == 'text':
-        out.write(result.text())
+        print(result.text())
     elif args.format == 'xml':
-        out.write(result.xml())
+        print(result.xml())
     elif args.format == 'json':
-        out.write(result.json(indent=2))
+        print(result.json(indent=2))
 
 
 if __name__ == '__main__':

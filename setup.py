@@ -14,7 +14,16 @@ setup(
     author='Jimmy Campbell',
     author_email='jcampbelly@gmail.com',
     url='https://github.com/jcampbelly/ecfg',
-    install_requires=['pyparsing>=2.0.3'],
+    install_requires=[
+        'pyparsing>=2.0.3'
+    ],
+    tests_require=[
+        'nose==1.3.7',
+        'coverage==3.7.1',
+        'flake8==2.4.1',
+        'mock==1.3.0'
+    ],
+    test_suite='nose.collector',
     packages=['ecfg'],
     entry_points={'console_scripts': ['ecfg = ecfg.cli:main']},
     classifiers=(

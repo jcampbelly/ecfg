@@ -167,6 +167,7 @@ class Value(object):
             data = '"%s"' % self.data
         return 'value "%s" %s: %s;' % (self.name, self.type, data)
 
+    # TODO: We really should do some type enforcement
     @property
     def value(self):
         '''A getter which returns the Value data as its actual Python data
@@ -183,7 +184,7 @@ class Value(object):
         return self.data
 
 
-class ParserError(object):
+class ParserError(Exception):
     pass
 
 

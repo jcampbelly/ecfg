@@ -1,2 +1,4 @@
 #!/bin/bash
-nosetests --with-coverage --cover-package=ecfg,ecfg.cli,ecfg.parser
+pkg=ecfg
+flake8 $pkg
+nosetests --with-coverage --cover-branches --cover-package=$pkg

@@ -1,70 +1,70 @@
 {
-  "name": "Root_Struct", 
+  "name": "Root_Struct",
   "lists": [
     {
-      "name": "List_A", 
+      "name": "List_A",
       "items": [
         {
-          "name": "Struct_A", 
-          "lists": [], 
+          "name": "Struct_A",
+          "lists": [],
           "values": [
             {
-              "name": "name_string", 
-              "type": "string", 
+              "name": "name_string",
+              "type": "string",
               "data": "string"
-            }, 
+            },
             {
-              "name": "name_int", 
-              "type": "int", 
+              "name": "name_int",
+              "type": "int",
               "data": "123456789"
-            }, 
+            },
             {
-              "name": "name_uint", 
-              "type": "uint", 
+              "name": "name_uint",
+              "type": "uint",
               "data": "123456789"
-            }, 
+            },
             {
-              "name": "name_uchar", 
-              "type": "uchar", 
+              "name": "name_uchar",
+              "type": "uchar",
               "data": "1"
-            }, 
+            },
             {
-              "name": "name_float", 
-              "type": "float", 
+              "name": "name_float",
+              "type": "float",
               "data": "1.0000000000000000000000000"
-            }, 
+            },
             {
-              "name": "name_double", 
-              "type": "double", 
+              "name": "name_double",
+              "type": "double",
               "data": "0.2500000000000000000000000"
             }
           ]
-        }, 
+        },
         {
-          "name": "Struct_B", 
-          "lists": [], 
+          "name": "Struct_B",
+          "lists": [],
           "values": [
             {
-              "name": "string", 
-              "type": "string", 
+              "name": "string",
+              "type": "string",
               "data": "string"
             }
           ]
         }
-      ], 
+      ],
       "values": [
         {
-          "name": "list_value", 
-          "type": "string", 
+          "name": "list_value",
+          "type": "string",
           "data": "list_value"
         }
       ]
     }
-  ], 
+  ],
   "values": [
     {
-      "name": "struct_value", 
-      "type": "string", 
+      "name": "struct_value",
+      "type": "string",
       "data": "struct_value"
     }
   ]
