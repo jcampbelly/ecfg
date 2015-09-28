@@ -1,5 +1,7 @@
 # ecfg
 
+[![Build Status](https://travis-ci.org/jcampbelly/ecfg.svg)](https://travis-ci.org/jcampbelly/ecfg)
+
 An Enlightenment config parser.
 
 See: http://wiki.openmoko.org/wiki/Enlightenment_.cfg
