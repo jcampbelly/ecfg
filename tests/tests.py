@@ -5,6 +5,7 @@ import os
 import ecfg
 import ecfg.cli
 import json
+import decimal
 
 
 SAMPLE_CFG = os.path.join(os.path.dirname(__file__), 'sample.cfg')
@@ -29,7 +30,7 @@ def get_text(path):
         return f.read()
 
 
-class ReprTests(TestCase):
+class MethodTests(TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -49,6 +50,42 @@ class ReprTests(TestCase):
         self.assertEqual(
             repr(self.cfg.root.values[0]),
             "Value(name='struct_value', type='string', data='struct_value')")
+
+    def test_value_string(self):
+        # value "name_string" string: "string";
+        value = self.cfg.root.lists[0].items[0].values[0]
+        self.assertEqual(value.name, 'name_string')
+        self.assertIsInstance(value.value, str)
+
+    def test_value_int(self):
+        # value "name_int" int: -123456789;
+        value = self.cfg.root.lists[0].items[0].values[1]
+        self.assertEqual(value.name, 'name_int')
+        self.assertIsInstance(value.value, int)
+
+    def test_value_uint(self):
+        # value "name_uint" uint: 123456789;
+        value = self.cfg.root.lists[0].items[0].values[2]
+        self.assertEqual(value.name, 'name_uint')
+        self.assertIsInstance(value.value, int)
+
+    def test_value_uchar(self):
+        # value "name_uchar" uchar: 1;
+        value = self.cfg.root.lists[0].items[0].values[3]
+        self.assertEqual(value.name, 'name_uchar')
+        self.assertIsInstance(value.value, int)
+
+    def test_value_float(self):
+        # value "name_float" float: 1.0000000000000000000000000;
+        value = self.cfg.root.lists[0].items[0].values[4]
+        self.assertEqual(value.name, 'name_float')
+        self.assertIsInstance(value.value, decimal.Decimal)
+
+    def test_value_double(self):
+        # value "name_double" double: 0.2500000000000000000000000;
+        value = self.cfg.root.lists[0].items[0].values[5]
+        self.assertEqual(value.name, 'name_double')
+        self.assertIsInstance(value.value, decimal.Decimal)
 
 
 class ECfgParserTests(TestCase):

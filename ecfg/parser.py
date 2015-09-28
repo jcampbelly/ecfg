@@ -178,7 +178,7 @@ class Value(object):
         - "string" -> ``str``.
         '''
         if self.type in ('uchar', 'uint', 'int'):
-            return int(self.type)
+            return int(self.data)
         elif self.type in ('float', 'double'):
             return decimal.Decimal(self.data)
         return self.data
