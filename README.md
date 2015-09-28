@@ -8,8 +8,26 @@ Requires pyparsing: https://pyparsing.wikispaces.com/.
 
 # Usage from CLI
 
+Help text for the `ecfg` command.
+
+```
+usage: ecfg [-h] [--format {text,xml,json}] filename
+
+Parse e.cfg files
+
+positional arguments:
+  filename
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --format {text,xml,json}
+                        Output format
+```
+
+Example usage:
+
 ```bash
-ecfg e.cfg --output xml
+ecfg e.cfg --format xml
 ```
 
 # Usage as a Library
