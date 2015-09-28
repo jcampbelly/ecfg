@@ -44,15 +44,15 @@ ecfg e.cfg --format xml
 import ecfg
 
 # parse the current config
-with open('e.cfg') as f:
+with open('tests/sample.cfg') as f:
     text = f.read()
 
 result = ecfg.ECfg(text)
 
 # manipualte the config
-for value in result.values:
-    if value.name == 'screensaver_enable':
-        value.data = 0
+for value in result.root.values:
+    if value.name == 'struct_value':
+        value.data = 'new_value'
 
 # save the new config
 with open('e2.cfg', 'w') as f:
